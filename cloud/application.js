@@ -13,4 +13,7 @@ app.use('/', function(req, res){
   res.end('Your Cloud App is Running');
 });
 
-module.exports = app.listen(process.env.FH_PORT || process.env.VCAP_APP_PORT || 8001);
+var port = process.env.FH_PORT || process.env.VCAP_APP_PORT || 8001;
+module.exports = app.listen(port, function(){
+  console.log("App started at: " + new Date());
+});
