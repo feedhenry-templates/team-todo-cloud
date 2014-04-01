@@ -4,15 +4,15 @@
   "dependencies" : {
     "fh-webapp" : "*",
     "fh-api" : "*",
-    "express" : "*",
-    "mongodb" : "*",
-    "async" : "*",
-    "winston" : "*"
+    "express" : "3.5.1",
+    "mongodb" : "1.3.23",
+    "async" : "0.6.2",
+    "winston" : "0.7.3"
   },
   "devDependencies" : {
     "fh-fhc" : "*",
-    "whiskey" : "*",
-    "proxyquire" : "*"
+    "whiskey" : "0.8.4",
+    "proxyquire" : "0.5.3"
   },
   "scripts": {
     "test": "whiskey --tests test/unit/endpoints/authenticate.js"
