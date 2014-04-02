@@ -1,6 +1,7 @@
 {
+  "id": "team_todo_backbone_project_cloud",
   "name": "Team To-Do Backbone Project-cloud",
   "type": "cloud_nodejs",
-  "repoUrl": "https://github.com/feedhenry-training/team-to-do-backbone-project-cloud.git",
-  "repoBranch": "refs/heads/master"
+  "repoUrl": "git://github.com/feedhenry-sample-apps/team-to-do-backbone-project-cloud.git",
+  "repoBranch": "refs/heads/6066-connection-bugfixing"
 }
