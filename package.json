@@ -12,9 +12,15 @@
     "winston": "~0.7.3"
   },
   "devDependencies": {
+    "grunt-contrib-watch": "latest",
+    "grunt-nodemon": "0.2.0",
+    "grunt-concurrent": "latest",
+    "grunt-shell": "0.6.4",
+    "grunt-env": "~0.4.1",
     "fh-fhc": "*",
     "whiskey": "~0.8.4",
-    "proxyquire": "~0.6.0"
+    "proxyquire": "~0.6.0",
+    "turbo-test-runner": "0.3.3"
   },
   "scripts": {
     "test": "./node_modules/.bin/whiskey --tests test/unit/endpoints/authenticate.js"
