@@ -2,19 +2,21 @@
   "name": "fh-app",
   "version": "0.1.0",
   "dependencies": {
-    "express": "3.3.4",
+    "express": "~4.0.0",
+    "body-parser": "~1.0.2",
+    "cors": "~2.2.0",
     "fh-mbaas-api": "~3.0.0",
     "fh-mbaas-express": "~3.0.0",
-    "mongodb": "*",
-    "async": "*",
-    "winston": "*"
+    "mongodb": "~1.4.2",
+    "async": "~0.7.0",
+    "winston": "~0.7.3"
   },
   "devDependencies": {
     "fh-fhc": "*",
-    "whiskey": "*",
-    "proxyquire": "*"
+    "whiskey": "~0.8.4",
+    "proxyquire": "~0.6.0"
   },
   "scripts": {
-    "test": "whiskey --tests test/unit/endpoints/authenticate.js"
+    "test": "./node_modules/.bin/whiskey --tests test/unit/endpoints/authenticate.js"
   }
 }
