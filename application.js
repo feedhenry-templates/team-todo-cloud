@@ -1,10 +1,5 @@
 var mbaas = require('fh-mbaas-express');
 var express = require('express');
-<<<<<<< HEAD
-$fh = require('fh-api');
-var mainjs = require('./main.js');
-=======
->>>>>>> 6066-connection-bugfixing
 
 var app = express();
 var securableEndpoints = [
