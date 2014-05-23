@@ -17,6 +17,10 @@ var securableEndpoints = [
 
 app.use('/sys', mbaas.sys(securableEndpoints));
 app.use('/mbaas', mbaas.mbaas);
+
+// Note: important that this is added just before your own Routes
+app.use(mbaas.fhmiddleware());
+
 app.use('/cloud', require('./lib/cloud.js')());
 
 // You can define custom URL handlers here, like this one:
