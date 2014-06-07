@@ -1,5 +1,7 @@
-var mbaas = require('fh-mbaas-express');
 var express = require('express');
+var mbaasApi = require('fh-mbaas-api');
+var mbaasExpress = mbaasApi.mbaasExpress();
+
 
 var app = express();
 var securableEndpoints = [
@@ -15,11 +17,11 @@ var securableEndpoints = [
   'fetchCompletedToDoAction'
 ];
 
-app.use('/sys', mbaas.sys(securableEndpoints));
-app.use('/mbaas', mbaas.mbaas);
+app.use('/sys', mbaasExpress.sys(securableEndpoints));
+app.use('/mbaas', mbaasExpress.mbaas);
 
 // Note: important that this is added just before your own Routes
-app.use(mbaas.fhmiddleware());
+app.use(mbaasExpress.fhmiddleware());
 
 app.use('/cloud', require('./lib/cloud.js')());
 
@@ -29,7 +31,7 @@ app.use('/', function(req, res){
 });
 
 // Important that this is last!
-app.use(mbaas.errorHandler());
+app.use(mbaasExpress.errorHandler());
 
 var port = process.env.FH_PORT || process.env.VCAP_APP_PORT || 8001;
 module.exports = app.listen(port, function(){
