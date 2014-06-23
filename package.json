@@ -1,6 +1,6 @@
 {
-  "name": "fh-app",
-  "version": "0.1.0",
+  "name": "team-todo-cloud",
+  "version": "0.2.0",
   "dependencies": {
     "express": "~4.0.0",
     "body-parser": "~1.0.2",
