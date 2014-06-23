@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function(grunt) {
+  require('time-grunt')(grunt);
   // Project Configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -35,80 +36,111 @@ module.exports = function(grunt) {
       }
     },
     concurrent: {
-      tasks: ['nodemon', 'watch'],
+      serve: ['nodemon', 'watch'],
+      debug: ['node-inspector', 'shell:debug', 'open:debug'],
       options: {
         logConcurrentOutput: true
       }
     },
-    env : {
-      options : {},
+    env: {
+      options: {},
       // environment variables - see https://github.com/jsoverson/grunt-env for more information
       local: {
         FH_USE_LOCAL_DB: true
       }
     },
+    'node-inspector': {
+      dev: {}
+    },
     shell: {
-      unit: {
+      debug: {
         options: {
-          stdout: true,
-          stderr: true
+          stdout: true
         },
-        command: 'env NODE_PATH=. ./node_modules/.bin/turbo test/unit'
+        command: 'env NODE_PATH=. node --debug-brk application.js'
       },
-      accept: {
-        options: {
-          stdout: true,
-          stderr: true
-        },
-        command: 'env NODE_PATH=. ./node_modules/.bin/turbo --setUp=test/accept/server.js --tearDown=test/accept/server.js test/accept'
+      // unit: {
+      //   options: {
+      //     stdout: true,
+      //     stderr: true
+      //   },
+      //   command: 'env NODE_PATH=. ./node_modules/.bin/turbo test/unit'
+      // },
+      // accept: {
+      //   options: {
+      //     stdout: true,
+      //     stderr: true
+      //   },
+      //   command: './node_modules/.bin/whiskey --tests tests/integration/authenticate.js'
+      // },
+      // coverage_unit: {
+      //   options: {
+      //     stdout: true,
+      //     stderr: true
+      //   },
+      //   command: [
+      //     'rm -rf coverage cov-unit',
+      //     'env NODE_PATH=. ./node_modules/.bin/istanbul cover --dir cov-unit ./node_modules/.bin/turbo -- test/unit',
+      //     './node_modules/.bin/istanbul report',
+      //     'echo "See html coverage at: `pwd`/coverage/lcov-report/index.html"'
+      //   ].join('&&')
+      // },
+      // coverage_accept: {
+      //   options: {
+      //     stdout: true,
+      //     stderr: true
+      //   },
+      //   command: [
+      //     'rm -rf coverage cov-accept',
+      //     'env NODE_PATH=. ./node_modules/.bin/istanbul cover --dir cov-accept ./node_modules/.bin/turbo -- --setUp=test/accept/server.js --tearDown=test/accept/server.js test/accept',
+      //     './node_modules/.bin/istanbul report',
+      //     'echo "See html coverage at: `pwd`/coverage/lcov-report/index.html"'
+      //   ].join('&&')
+      // }
+    },
+    open: {
+      debug: {
+        path: 'http://127.0.0.1:8080/debug?port=5858',
+        app: 'Google Chrome'
       },
-      coverage_unit: {
+      platoReport: {
+        path: './plato/index.html',
+        app: 'Google Chrome'
+      }
+    },
+    plato: {
+      src: {
         options: {
-          stdout: true,
-          stderr: true
+          jshint: grunt.file.readJSON('.jshintrc')
         },
-        command: [
-          'rm -rf coverage cov-unit',
-          'env NODE_PATH=. ./node_modules/.bin/istanbul cover --dir cov-unit ./node_modules/.bin/turbo -- test/unit',
-          './node_modules/.bin/istanbul report',
-          'echo "See html coverage at: `pwd`/coverage/lcov-report/index.html"'
-        ].join('&&')
-      },
-      coverage_accept: {
-        options: {
-          stdout: true,
-          stderr: true
-        },
-        command: [
-          'rm -rf coverage cov-accept',
-          'env NODE_PATH=. ./node_modules/.bin/istanbul cover --dir cov-accept ./node_modules/.bin/turbo -- --setUp=test/accept/server.js --tearDown=test/accept/server.js test/accept',
-          './node_modules/.bin/istanbul report',
-          'echo "See html coverage at: `pwd`/coverage/lcov-report/index.html"'
-        ].join('&&')
+        files: {
+          'plato': ['lib/**/*.js']
+        }
       }
     }
   });
 
   // Load NPM tasks
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-nodemon');
-  grunt.loadNpmTasks('grunt-concurrent');
-  grunt.loadNpmTasks('grunt-shell');
-  grunt.loadNpmTasks('grunt-env');
+  require('load-grunt-tasks')(grunt, {
+    scope: 'devDependencies'
+  });
 
   // Testing tasks
   grunt.registerTask('test', ['shell:unit', 'shell:accept']);
   grunt.registerTask('unit', ['shell:unit']);
-  grunt.registerTask('accept', ['shell:accept']);
+  grunt.registerTask('accept', ['env:local', 'shell:accept']);
 
   // Coverate tasks
   grunt.registerTask('coverage', ['shell:coverage_unit', 'shell:coverage_accept']);
   grunt.registerTask('coverage-unit', ['shell:coverage_unit']);
-  grunt.registerTask('coverage-accept', ['shell:coverage_accept']);
+  grunt.registerTask('coverage-accept', ['env:local', 'shell:coverage_accept']);
 
   // Making grunt default to force in order not to break the project.
   grunt.option('force', true);
 
-  grunt.registerTask('serve', ['env:local', 'concurrent']);
+  grunt.registerTask('analysis', ['plato:src', 'open:platoReport']);
+
+  grunt.registerTask('serve', ['env:local', 'concurrent:serve']);
+  grunt.registerTask('debug', ['env:local', 'concurrent:debug']);
   grunt.registerTask('default', ['serve']);
 };

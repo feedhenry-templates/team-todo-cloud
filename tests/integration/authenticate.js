@@ -15,24 +15,19 @@
 // Dependencies.
 var fh = require("fh-fhc");
 var winston = require("winston");
-var testConfig = require('../../config/testConfig.js');
-var constants = require('../../config/constants.js');
+var testConfig = require('../../lib/config/testConfig.js');
+var constants = require('../../lib/config/constants.js');
 
 var MODULE_NAME = " - Authentication Test - ";
 
 // Construct an empty authentication request format object.
-var authReq =
-{
-  "request":
-  {
-    "header":
-    {
+var authReq = {
+  "request": {
+    "header": {
       "appType": ""
     },
-    "payload":
-    {
-      "login":
-      {
+    "payload": {
+      "login": {
         "userName": "",
         "password": ""
       }
@@ -44,8 +39,7 @@ var authReq =
 /**
  * Function which tests valid authentication request.
  */
-exports.test_AuthenticateValidTest = function(test, assert)
-{
+exports.test_AuthenticateValidTest = function(test, assert) {
   var METHOD_NAME = "AuthenticateValidTest :";
   winston.info("\n----------: START" + MODULE_NAME + METHOD_NAME + "----------\n");
 
@@ -54,15 +48,13 @@ exports.test_AuthenticateValidTest = function(test, assert)
   authReq.request.payload.login.userName = "Spengler";
   authReq.request.payload.login.password = "TheKeymaster";
 
-  fh.fhc.load(function(err)
-  {
+  fh.fhc.load(function(err) {
     var start = new Date();
     var datePrefix = start.toJSON();
     winston.info("Authentication request - " + datePrefix + " : " + JSON.stringify(authReq, null, '\t'));
 
     // Make a call to authentication endpoint.
-    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(error, data)
-    {
+    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(error, data) {
       // Error object?
       assert.ifError(err);
 
@@ -96,8 +88,7 @@ exports.test_AuthenticateValidTest = function(test, assert)
 /**
  * Function which tests invalid authentication request (Bad user credentials).
  */
-exports.test_AuthenticateBadCredential = function(test, assert)
-{
+exports.test_AuthenticateBadCredential = function(test, assert) {
   var METHOD_NAME = "AuthenticateInvalidTest (Bad user credentials) :";
   winston.info("\n----------: START" + MODULE_NAME + METHOD_NAME + "----------\n");
 
@@ -106,14 +97,12 @@ exports.test_AuthenticateBadCredential = function(test, assert)
   authReq.request.payload.login.userName = "Spengler";
   authReq.request.payload.login.password = "TheKey";
 
-  fh.fhc.load(function(err)
-  {
+  fh.fhc.load(function(err) {
     var start = new Date();
     var datePrefix = start.toJSON();
     winston.info("Authentication request - " + datePrefix + " : " + JSON.stringify(authReq, null, '\t'));
 
-    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data)
-    {
+    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data) {
       var errorResponse = err.split("error:")[1].split("'")[1];
       var Error = JSON.parse(errorResponse);
 
@@ -146,8 +135,7 @@ exports.test_AuthenticateBadCredential = function(test, assert)
 /**
  * Function which tests invalid authentication request (Invalid application type).
  */
-exports.test_AuthenticateInvalidApptype = function(test, assert)
-{
+exports.test_AuthenticateInvalidApptype = function(test, assert) {
   var METHOD_NAME = "AuthenticateInvalidTest (Invalid application type) :";
   winston.info("\n----------: START" + MODULE_NAME + METHOD_NAME + "----------\n");
 
@@ -156,14 +144,12 @@ exports.test_AuthenticateInvalidApptype = function(test, assert)
   authReq.request.payload.login.userName = "Spengler";
   authReq.request.payload.login.password = "TheKeymaster";
 
-  fh.fhc.load(function(err)
-  {
+  fh.fhc.load(function(err) {
     var start = new Date();
     var datePrefix = start.toJSON();
     winston.info("Authentication request - " + datePrefix + " : " + JSON.stringify(authReq, null, '\t'));
 
-    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data)
-    {
+    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data) {
       var errorResponse = err.split("error:")[1].split("'")[1];
       var Error = JSON.parse(errorResponse);
 
@@ -196,8 +182,7 @@ exports.test_AuthenticateInvalidApptype = function(test, assert)
 /**
  * Function which tests invalid authentication request (Empty authentication request parameters).
  */
-exports.test_AuthenticateBadRequest = function(test, assert)
-{
+exports.test_AuthenticateBadRequest = function(test, assert) {
   var METHOD_NAME = "AuthenticateInvalidTest (Empty request parameters) :";
   winston.info("\n----------: START" + MODULE_NAME + METHOD_NAME + "----------\n");
 
@@ -206,14 +191,12 @@ exports.test_AuthenticateBadRequest = function(test, assert)
   authReq.request.payload.login.userName = "";
   authReq.request.payload.login.password = "";
 
-  fh.fhc.load(function(err)
-  {
+  fh.fhc.load(function(err) {
     var start = new Date();
     var datePrefix = start.toJSON();
     winston.info("Authentication request - " + datePrefix + " : " + JSON.stringify(authReq, null, '\t'));
 
-    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data)
-    {
+    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data) {
       var errorResponse = err.split("error:")[1].split("'")[1];
       var Error = JSON.parse(errorResponse);
 
@@ -246,8 +229,7 @@ exports.test_AuthenticateBadRequest = function(test, assert)
 /**
  * Function which tests invalid authentication request (Missing application type).
  */
-exports.test_AuthenticateBlankApptype = function(test, assert)
-{
+exports.test_AuthenticateBlankApptype = function(test, assert) {
   var METHOD_NAME = "AuthenticateInvalidTest (Missing application type) :";
   winston.info("\n----------: START" + MODULE_NAME + METHOD_NAME + "----------\n");
 
@@ -256,14 +238,12 @@ exports.test_AuthenticateBlankApptype = function(test, assert)
   authReq.request.payload.login.userName = "Spengler";
   authReq.request.payload.login.password = "TheKeymaster";
 
-  fh.fhc.load(function(err)
-  {
+  fh.fhc.load(function(err) {
     var start = new Date();
     var datePrefix = start.toJSON();
     winston.info("Authentication request - " + datePrefix + " : " + JSON.stringify(authReq, null, '\t'));
 
-    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data)
-    {
+    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data) {
       var errorResponse = err.split("error:")[1].split("'")[1];
       var Error = JSON.parse(errorResponse);
 
@@ -296,8 +276,7 @@ exports.test_AuthenticateBlankApptype = function(test, assert)
 /**
  * Function which tests invalid authentication request (Missing user name).
  */
-exports.test_AuthenticateBlankUsername = function(test, assert)
-{
+exports.test_AuthenticateBlankUsername = function(test, assert) {
   var METHOD_NAME = "AuthenticateInvalidTest (Missing user name) :";
   winston.info("\n----------: START" + MODULE_NAME + METHOD_NAME + "----------\n");
 
@@ -306,14 +285,12 @@ exports.test_AuthenticateBlankUsername = function(test, assert)
   authReq.request.payload.login.userName = "";
   authReq.request.payload.login.password = "TheKeymaster";
 
-  fh.fhc.load(function(err)
-  {
+  fh.fhc.load(function(err) {
     var start = new Date();
     var datePrefix = start.toJSON();
     winston.info("Authentication request - " + datePrefix + " : " + JSON.stringify(authReq, null, '\t'));
 
-    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data)
-    {
+    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data) {
       var errorResponse = err.split("error:")[1].split("'")[1];
       var Error = JSON.parse(errorResponse);
 
@@ -346,8 +323,7 @@ exports.test_AuthenticateBlankUsername = function(test, assert)
 /**
  * Function which tests invalid authentication request (Missing password).
  */
-exports.test_AuthenticateBlankPassword = function(test, assert)
-{
+exports.test_AuthenticateBlankPassword = function(test, assert) {
   var METHOD_NAME = "AuthenticateInvalidTest (Missing password) :";
   winston.info("\n----------: START" + MODULE_NAME + METHOD_NAME + "----------\n");
 
@@ -356,14 +332,12 @@ exports.test_AuthenticateBlankPassword = function(test, assert)
   authReq.request.payload.login.userName = "Spengler";
   authReq.request.payload.login.password = "";
 
-  fh.fhc.load(function(err)
-  {
+  fh.fhc.load(function(err) {
     var start = new Date();
     var datePrefix = start.toJSON();
     winston.info("Authentication request - " + datePrefix + " : " + JSON.stringify(authReq, null, '\t'));
 
-    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data)
-    {
+    fh.act([testConfig.appId, 'authenticateAction', JSON.stringify(authReq)], function(err, data) {
       var errorResponse = err.split("error:")[1].split("'")[1];
       var Error = JSON.parse(errorResponse);
 
