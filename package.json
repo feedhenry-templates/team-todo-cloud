@@ -31,5 +31,6 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/whiskey --tests tests/integration/authenticate.js"
-  }
+  },
+  "license": "mit"
 }
