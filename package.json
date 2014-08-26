@@ -5,7 +5,7 @@
     "express": "~4.0.0",
     "body-parser": "~1.0.2",
     "cors": "~2.2.0",
-    "fh-mbaas-api": "~4.0.0",
+    "fh-mbaas-api": "~4.2.0",
     "mongodb": "~1.4.2",
     "async": "~0.7.0",
     "winston": "~0.7.3"
