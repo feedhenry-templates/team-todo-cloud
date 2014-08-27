@@ -1,6 +1,6 @@
 {
-  "name": "fh-app",
-  "version": "0.1.0",
+  "name": "team-todo-cloud",
+  "version": "0.2.0",
   "dependencies": {
     "express": "~4.0.0",
     "body-parser": "~1.0.2",
@@ -14,14 +14,22 @@
     "grunt-contrib-watch": "latest",
     "grunt-nodemon": "0.2.0",
     "grunt-concurrent": "latest",
+    "supertest": "0.8.2",
+    "should": "2.1.1",
+    "turbo-test-runner": "0.3.3",
+    "proxyquire": "0.5.3",
     "grunt-shell": "0.6.4",
+    "istanbul": "0.2.7",
     "grunt-env": "~0.4.1",
-    "fh-fhc": "*",
-    "whiskey": "~0.8.4",
-    "proxyquire": "~0.6.0",
-    "turbo-test-runner": "0.3.3"
+    "load-grunt-tasks": "~0.4.0",
+    "time-grunt": "~0.3.1",
+    "grunt-node-inspector": "~0.1.5",
+    "grunt-open": "~0.2.3",
+    "grunt-plato": "~1.0.0",
+    "whiskey": "0.8.4"
   },
   "scripts": {
-    "test": "./node_modules/.bin/whiskey --tests test/unit/endpoints/authenticate.js"
-  }
+    "test": "./node_modules/.bin/whiskey --tests tests/integration/authenticate.js"
+  },
+  "license": "mit"
 }
