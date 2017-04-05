@@ -1,6 +1,7 @@
 See http://docs.feedhenry.com/ for more information on building node.js services on the FeedHenry platform.
 
 # Cloud: #
+[![Dependency Status](https://img.shields.io/david/feedhenry-templates/team-todo-cloud.svg?style=flat-square)](https://david-dm.org/feedhenry-templates/team-todo-cloud)
 
 Cloud application exposes the set of REST endpoint api's for client applications. Whenever request arrives from client application, it communicates with the data layer and sends the generated the response back to the client application.
 Cloud app is mainly distributed into endpoints, data layer and service layer. Endpoints are mainly responsible for receiving client requests, validate it and forward it to data layer. Endpoints are also responsible for massaging data returned by data layer.
